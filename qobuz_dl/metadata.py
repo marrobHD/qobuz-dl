@@ -96,6 +96,10 @@ def _embed_flac_img(root_dir, audio: FLAC):
     else:
         cover_image = multi_emb_image
 
+    if not os.path.isfile(cover_image):
+        logger.debug(f"Cover image not found to embed: {cover_image}")
+        return
+
     try:
         if os.path.getsize(cover_image) > FLAC_MAX_BLOCKSIZE:
             raise Exception(
@@ -123,6 +127,10 @@ def _embed_id3_img(root_dir, audio: id3.ID3):
         cover_image = emb_image
     else:
         cover_image = multi_emb_image
+
+    if not os.path.isfile(cover_image):
+        logger.debug(f"Cover image not found to embed: {cover_image}")
+        return
 
     with open(cover_image, "rb") as cover:
         audio.add(id3.APIC(3, "image/jpeg", 3, "", cover.read()))
