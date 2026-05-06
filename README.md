@@ -29,6 +29,7 @@ Search, explore, and download Lossless and Hi-Res music from [Qobuz](https://www
 * **Terminal Recovery (Raw Mode Fix):** Resolved a critical UI bug where interrupting the interactive search prompt (`fun` mode) with `CTRL+C` would leave the OS terminal in a broken state. The engine now safely triggers a graceful system exit, restoring the terminal's default line discipline.
 * **Smart Quality Fallback:** Automatically downgrades to the next best available quality if the requested tier is restricted by the server, ensuring your download queue never crashes.
 * **Authentication Bypass:** Log in securely using your browser's **Auth Token** if standard password authentication is blocked. Graciously handles Free/Studio accounts.
+* **Anti-Ban Stealth Spoofing:** Modern WAF (Web Application Firewalls) block API requests originating from headless scripts. This engine features full cryptographic stealth spoofing, injecting exact Windows/Chrome Client Hints (`Sec-Ch-Ua`, `Sec-Fetch-Site`) to make your session completely indistinguishable from a legitimate user navigating the Qobuz Web Player, significantly reducing 403 errors and preventing account bans.
 * **Limitless Playlists:** Overcomes Qobuz API restrictions by dynamically paginating chunk requests, allowing you to seamlessly queue and download massive playlists without the standard 50-track bottleneck.
 * **Smart Resume (No Overwrites):** Intelligently detects existing files on your local drive and automatically skips them. If a massive discography download gets interrupted, it resumes instantly without wasting time or bandwidth re-downloading existing tracks.
 * **Stateful Batch Downloading (Text File Memory):** When downloading massive queues from a `.txt` file, the engine acts as a living database. It automatically validates URLs and appends a `[DONE]` tag next to completed links directly inside your text file. If your connection drops or you abort the process, simply re-run the command: the engine will instantly skip the completed links and seamlessly resume the queue exactly where it left off.
@@ -195,8 +196,8 @@ Do you have a massive list of releases to download? Create a standard text file 
 python -m qobuz_dl dl list.txt
 ```
 
-**Safe Download (Anti-Ban):**
-Disables multithreading to simulate human behavior during massive download sessions.
+**Ultimate Anti-Ban Mode (Stealth + Delay):**
+While the engine natively masks your digital footprint (Stealth Spoofing) to simulate a real Chrome browser, downloading 100 tracks in 10 seconds is still physically impossible for a human and can trigger volume-based bans. Use this command for massive discographies to disable multithreading and add a forced cooldown between tracks, ensuring maximum account safety.
 ```bash
 python -m qobuz_dl dl <URL> --delay 1
 ```

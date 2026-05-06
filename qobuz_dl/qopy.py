@@ -49,9 +49,16 @@ class Client:
         # --- CONDITIONAL ENGLISH LANGUAGE OVERRIDE ---
         if self.force_english:
             self.session.headers.update({
-                "Accept-Language": "en-US,en;q=0.9",
-                "X-Locale": "en_US"
-            })
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "application/json, text/plain, */*",
+            "Sec-Ch-Ua": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"",
+            "Sec-Ch-Ua-Mobile": "?0",
+            "Sec-Ch-Ua-Platform": "\"Windows\"",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-site",
+            "X-App-Id": self.id,
+        })
         # ---------------------------------------------
         
         self.session.headers.update({
